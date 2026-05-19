@@ -10,9 +10,9 @@ public class OSCompatibilityTest {
     @Test
     public void testWindowsPathStyle() throws IOException {
         // Cố tình viết cứng đường dẫn dùng dấu gạch chéo ngược của Windows
-        String hardcodedPath = "target\\test-folder\\temp.txt";
+        String smartPath = "target" + File.separator + "test-folder" +  File.separator + "temp.txt";
 
-        File file = new File(hardcodedPath);
+        File file = new File(smartPath);
         // Tạo thư mục cha nếu chưa có
         file.getParentFile().mkdirs();
 
