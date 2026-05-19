@@ -1,0 +1,39 @@
+# 1. Đặt tên cho toàn bộ quy trình tự động hóa này
+name: Java CI/CD Automation with Maven
+
+# 2. Điều kiện kích hoạt robot (Trực tiếp đáp ứng Nhiệm vụ 1)
+on:
+  push:
+    branches: [ "main", "master" ]       # Kích hoạt khi bạn đẩy code lên nhánh main/master
+  pull_request:
+    branches: [ "main", "master" ]       # Kích hoạt khi có yêu cầu nộp bài/gộp code vào nhánh chính
+
+# 3. Danh sách các hành động máy ảo sẽ làm (Đáp ứng Nhiệm vụ 2 & 3)
+jobs:
+  build-and-test:
+    # Chỉ định máy ảo chạy hệ điều hành Ubuntu phiên bản mới nhất
+    runs-on: ubuntu-latest
+
+    steps:
+      # Bước 2.1: Lấy toàn bộ mã nguồn từ tài khoản GitHub của bạn bỏ vào máy ảo
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      # Bước 2.2: Cài đặt môi trường Java (JDK) cho máy ảo (Sử dụng bản Java 25 đúng dự án của bạn)
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'oracle' # Sử dụng Oracle OpenJDK giống cấu hình máy local của bạn
+          cache: maven           # Tự động lưu cache để các lần build sau chạy nhanh hơn
+
+      # Bước 2.3: Thực hiện biên dịch, chạy Checkstyle và Unit Test (Đáp ứng Nhiệm vụ 2)
+      - name: Build with Maven (Compile, Checkstyle, and Test)
+        run: mvn clean package
+
+      # Bước 2.4: Đóng gói và đẩy file thành phẩm .jar lên đám mây lưu trữ (Đáp ứng Nhiệm vụ 3)
+      - name: Upload Build Artifact (JAR File)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Week9-Executable-JAR               # Tên gói file khi tải từ GitHub về
+          path: target/*.jar                       # Đường dẫn nhặt file .jar nằm trong thư mục target máy ảo
