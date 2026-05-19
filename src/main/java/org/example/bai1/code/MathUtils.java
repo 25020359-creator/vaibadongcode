@@ -2,7 +2,10 @@ package org.example.bai1.code;
 
 public class MathUtils {
     public static int max(int a, int b) {
-        return 999; // Cố tình sửa sai ở đây
+        if (a>b) {
+            return a;
+        }
+        return b;
     }
 
     public static int devide(int a, int b) {
