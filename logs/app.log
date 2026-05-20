@@ -1,0 +1,11 @@
+2026-05-20 19:27:48 [main] INFO  testbai9.TestMathUtils_bai9 - Bắt đầu chạy toàn bộ test bài 9!
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm divide() với tham số: a = 10, b = 0
+2026-05-20 19:27:48 [main] ERROR org.example.bai9.code.MathUtils - Lỗi chia cho số 0! Tham số b nhận vào bằng 0
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm max() với tham số: a = 1, b = 1
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm max() với tham số: a = 3, b = 1
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm max() với tham số: a = 1, b = 3
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm divide() với tham số: a = 2, b = 1
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm divide() với tham số: a = 2, b = -1
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm max() với tham số: a = 5, b = 2147483647
+2026-05-20 19:27:48 [main] INFO  org.example.bai9.code.MathUtils - Chạy hàm max() với tham số: a = 5, b = -2147483648
+2026-05-20 19:27:48 [main] INFO  testbai9.TestMathUtils_bai9 - Kết thúc chạy toàn bộ test bài 9!
