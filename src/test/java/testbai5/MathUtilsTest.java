@@ -12,3 +12,5 @@ public class MathUtilsTest {
         assertEquals(2, MathUtils.max(2, 2));
     }
 }
+
+
