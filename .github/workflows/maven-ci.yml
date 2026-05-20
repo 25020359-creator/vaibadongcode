@@ -8,12 +8,10 @@ on:
 
 jobs:
   build-and-test:
-    # 1. Định nghĩa chiến lược Matrix chạy đa hệ điều hành
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-    
-    # 2. Sử dụng biến matrix để kích hoạt hệ điều hành tương ứng
+
     runs-on: ${{ matrix.os }}
 
     steps:
