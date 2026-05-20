@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main", "master" ] # BƯỚC 1: Kích hoạt khi có Pull Request
+    branches: [ "main", "master" ]
 
 jobs:
   build-and-test:
@@ -14,7 +14,6 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
-    # CẤP QUYỀN: Bắt buộc phải có để Bot có quyền ghi bình luận vào PR
     permissions:
       contents: read
       pull-requests: write
@@ -23,10 +22,10 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'oracle'
           cache: maven
 
@@ -34,7 +33,7 @@ jobs:
         run: mvn clean verify
 
       - name: Run Checkstyle Reviewer Bot
-        if: always() # Luôn luôn chạy kể cả khi bước build trên bị fail để báo lỗi code
+        if: always()
         uses: dbelyaev/action-checkstyle@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
