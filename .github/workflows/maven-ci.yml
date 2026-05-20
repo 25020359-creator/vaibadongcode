@@ -29,11 +29,10 @@ jobs:
 
       - name: Build and Verify with Maven (Includes JaCoCo)
         run: mvn clean verify
-            
-            # Nhiệm vụ 4: Lưu giữ tệp báo cáo bao phủ dưới dạng Artifact
-          - name: Upload JaCoCo Code Coverage Report
-            if: always() # Giữ bước này luôn chạy kể cả khi build thành công hay thất bại để xem lỗi
-            uses: actions/upload-artifact@v4
-            with:
-              name: Code-Coverage-Report
-              path: target/site/jacoco/
+
+      - name: Upload JaCoCo Code Coverage Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Code-Coverage-Report
+          path: target/site/jacoco/
