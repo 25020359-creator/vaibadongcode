@@ -23,8 +23,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # ❌ CỐ TÌNH GÂY LỖI BÀI 10: Ép GitHub Actions dùng JDK 17
-      # Trong khi plugin Surefire cổ lỗ sĩ trong file pom.xml mới không thể gánh được bản Java này
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -32,16 +30,13 @@ jobs:
           distribution: 'oracle'
           cache: maven
 
-      # Bước này chạy lệnh verify sẽ dính ngay lỗi sập nguồn vì không thể tải dependency logback 9.9.9
-      # và không quét được test của Surefire 2.12.4
       - name: Build and Verify with Maven (Includes JaCoCo)
         run: mvn clean verify
 
-      # BƯỚC 2: Tích hợp Inline Feedback Bot
       - name: Run Checkstyle Reviewer Bot
         if: always() # Luôn luôn chạy kể cả khi bước build trên bị fail để báo lỗi code
         uses: dbelyaev/action-checkstyle@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          checkstyle_config: google_checks.xml # Sử dụng đúng file cấu hình của dự án
+          checkstyle_config: google_checks.xml
           level: warning
