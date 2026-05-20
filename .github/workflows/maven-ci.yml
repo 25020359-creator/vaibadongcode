@@ -36,7 +36,7 @@ jobs:
       # BƯỚC 2: Tích hợp Inline Feedback Bot
       - name: Run Checkstyle Reviewer Bot
         if: always() # Luôn luôn chạy kể cả khi bước build trên bị fail để báo lỗi code
-        uses: dbelyaev/action-checkstyle@v11
+        uses: dbelyaev/action-checkstyle@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           checkstyle_config: google_checks.xml # Sử dụng đúng file cấu hình của dự án
