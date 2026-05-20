@@ -39,5 +39,5 @@ jobs:
         uses: dbelyaev/action-checkstyle@v11
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          checkstyle_config: src/main/resources/google_checks.xm # Sử dụng đúng file cấu hình của dự án
+          checkstyle_config: google_checks.xml # Sử dụng đúng file cấu hình của dự án
           level: warning
