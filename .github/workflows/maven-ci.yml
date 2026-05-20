@@ -37,5 +37,5 @@ jobs:
         uses: dbelyaev/action-checkstyle@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          checkstyle_config: google_checks.xml
+          checkstyle_config: heheheheheheh.xml
           level: warning
