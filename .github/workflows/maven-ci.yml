@@ -27,13 +27,13 @@ jobs:
           distribution: 'oracle'
           cache: maven
 
-      - name: Build with Maven
-        run: mvn clean package
-
-      # Chỉ upload artifact từ máy ảo ubuntu để tránh trùng lặp file tải lên
-      - name: Upload Build Artifact (JAR File)
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Week9-Executable-JAR
-          path: target/*.jar
+      - name: Build and Verify with Maven (Includes JaCoCo)
+        run: mvn clean verify
+            
+            # Nhiệm vụ 4: Lưu giữ tệp báo cáo bao phủ dưới dạng Artifact
+          - name: Upload JaCoCo Code Coverage Report
+            if: always() # Giữ bước này luôn chạy kể cả khi build thành công hay thất bại để xem lỗi
+            uses: actions/upload-artifact@v4
+            with:
+              name: Code-Coverage-Report
+              path: target/site/jacoco/
