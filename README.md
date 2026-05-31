@@ -115,5 +115,5 @@ mvn javafx:run -pl client
 
 ## 6. Tài liệu Báo cáo và Video Demo
 
-* 📄 **Báo cáo PDF:** [Bao_Cao_He_Thong_Dau_Gia.pdf](https://github.com/nguyenvanal/auction-system/raw/main/Bao_Cao_He_Thong_Dau_Gia.pdf) *(Nhấn vào đây để xem chi tiết kiến trúc)*
+* 📄 **Báo cáo PDF:** [Bao_Cao_He_Thong_Dau_Gia.pdf](Bao_Cao_He_Thong_Dau_Gia.pdf) *(Nhấn vào đây để xem chi tiết kiến trúc)*
 * 🎥 **Video Demo toàn bộ luồng hệ thống:** [Chèn link YouTube / Google Drive Demo vào đây]
