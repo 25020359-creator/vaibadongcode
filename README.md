@@ -1,0 +1,106 @@
+# 🏷️ Hệ Thống Đấu Giá Trực Tuyến (Auction System)
+
+**Đồ án / Bài tập lớn môn học**
+
+---
+
+## 1. Mô tả bài toán và phạm vi hệ thống
+
+**Bài toán:**
+Hệ thống giải quyết nhu cầu định giá và giao dịch tài sản trực tuyến thông qua hình thức đấu giá thời gian thực (Real-time). Thách thức lớn nhất đặt ra đối với nền tảng là phải đảm bảo tính toàn vẹn dữ liệu khi có nhiều người cùng đặt giá tại một mili-giây, đồng thời duy trì kết nối ổn định liên tục giữa máy chủ và nhiều máy khách.
+
+**Phạm vi hệ thống:**
+Ứng dụng hoạt động theo kiến trúc Client-Server, phân quyền thành 3 nhóm người dùng chính:
+* **Quản trị viên (Admin):** Quản lý hệ thống, người dùng và theo dõi thống kê các phiên đấu giá.
+* **Người bán (Seller):** Đăng tải hàng hóa, thiết lập giá khởi điểm và thời gian bắt đầu phiên.
+* **Người mua (Bidder):** Tham gia vào các phòng đấu giá trực tuyến, theo dõi biến động giá realtime và thực hiện đặt giá (Bid).
+
+---
+
+## 2. Công nghệ sử dụng, môi trường chạy và yêu cầu cài đặt
+
+**Công nghệ cốt lõi:**
+* **Ngôn ngữ lập trình:** Java (Core & Đa luồng)
+* **Giao diện Frontend:** JavaFX, FXML (Scene Builder), CSS
+* **Giao tiếp mạng:** Java Socket (TCP/IP)
+* **Cơ sở dữ liệu:** MySQL / MariaDB (Triển khai trên Cloud Railway)
+* **Công cụ Quản lý & Build:** Apache Maven
+* **Kiểm thử (Testing):** JUnit 5
+
+**Yêu cầu môi trường & Cài đặt:**
+* **Hệ điều hành:** Đa nền tảng (Windows, macOS, Linux).
+* **Môi trường:** Máy tính cần cài đặt JDK (phiên bản 17 hoặc 21) và đã thiết lập biến môi trường `JAVA_HOME`.
+* **Mạng:** Bắt buộc có kết nối Internet để ứng dụng giao tiếp với Server và Cơ sở dữ liệu đám mây. Không yêu cầu cài đặt MySQL/XAMPP dưới Localhost.
+
+---
+
+## 3. Cấu trúc thư mục và các module chính
+
+Dự án áp dụng mô hình **MVC** cho giao diện và **DAO Pattern** cho CSDL. Mã nguồn được chia thành 3 module độc lập quản lý bởi Maven nhằm đảm bảo tính Separation of Concerns:
+
+```text
+📦 Auction_System
+ ┣ 📂 common (Thư viện giao tiếp dùng chung)
+ ┃ ┣ 📂 model     : Thực thể (Entity) đại diện cho các bảng CSDL (User, Item, Bid)
+ ┃ ┣ 📂 dto       : Data Transfer Object đóng gói dữ liệu qua mạng
+ ┃ ┣ 📂 network   : Định nghĩa cấu trúc gói tin (Request/Response)
+ ┃ ┣ 📂 exception : Xử lý lỗi nghiệp vụ tùy chỉnh (InvalidBidException...)
+ ┃ ┗ 📂 enums     : Tập hằng số cấu hình hệ thống (Role, ItemStatus)
+ ┃
+ ┣ 📂 server (Backend - Xử lý nghiệp vụ & Database)
+ ┃ ┣ 📂 main      : Điểm khởi chạy Server Socket (MainServer)
+ ┃ ┣ 📂 dao       : Data Access Object tương tác trực tiếp với MySQL
+ ┃ ┣ 📂 service   : Tầng nghiệp vụ cốt lõi, xử lý đồng bộ và kiểm tra logic
+ ┃ ┣ 📂 network   : Quản lý luồng Client (ClientHandler) và SessionManager
+ ┃ ┗ 📂 dp        : Áp dụng các Design Patterns (Factory Method...)
+ ┃
+ ┗ 📂 client (Frontend - Giao diện JavaFX)
+   ┣ 📂 main       : Điểm nạp giao diện ứng dụng (MainApplication)
+   ┣ 📂 controller : Điều hướng màn hình, bắt sự kiện thao tác người dùng
+   ┣ 📂 service    : Quản lý Socket luồng nền, lắng nghe Response realtime
+   ┣ 📂 util       : Các tiện ích hỗ trợ UI (Session, DialogHelper)
+   ┗ 📂 resources  : Chứa cấu trúc thư mục view (.fxml), css và images
+```
+
+---
+
+## 4. Hướng dẫn khởi chạy ứng dụng bằng Command Line
+
+Hệ thống sử dụng các plugin của Maven nên thao tác khởi chạy hoàn toàn thống nhất và **chạy được trên mọi Terminal/Command Prompt của Windows, Linux, hoặc macOS**.
+
+### Bước 1: Biên dịch toàn dự án (Chỉ chạy 1 lần)
+Mở Terminal tại thư mục gốc của dự án (nơi chứa file `pom.xml` cha) để tải thư viện và liên kết các module:
+```bash
+mvn clean install
+```
+
+### Bước 2: Khởi động Server (Bắt buộc chạy trước)
+Chuyển hướng Terminal (hoặc mở Terminal mới tại thư mục gốc) và chạy lệnh:
+```bash
+mvn exec:java -pl server
+```
+*(Lưu ý: Bạn cần giữ nguyên cửa sổ này để Server liên tục hoạt động và điều phối các kết nối).*
+
+### Bước 3: Khởi động Client (Có thể chạy nhiều cửa sổ)
+Mở một cửa sổ Terminal **hoàn toàn mới** và chạy lệnh:
+```bash
+mvn javafx:run -pl client
+```
+*(Mẹo: Bạn có thể mở nhiều tab Terminal và chạy lệnh này lặp đi lặp lại để tạo ra 2, 3, hay nhiều Client giả lập các người dùng khác nhau cùng tham gia vào một phòng đấu giá).*
+
+---
+
+## 5. Danh sách các chức năng đã hoàn thành
+
+* **Tương tác thời gian thực (Real-time):** Bất kỳ lệnh đặt giá (Bid) nào cũng lập tức được Broadcast (phát sóng) đến toàn bộ Client đang online trong phòng với độ trễ tối thiểu.
+* **Chống xung đột dữ liệu (Concurrency Control):** Áp dụng từ khóa `synchronized` trên tầng Service của Server để khóa luồng, ngăn chặn lỗi Race Condition khi hàng chục người cùng thao tác.
+* **Bảo mật & Tối ưu băng thông:** Các thông tin nhạy cảm không được gửi trực tiếp mà đều thông qua lớp giáp `DTO`, gói gọn trong định dạng JSON nhẹ nhàng.
+* **Triển khai Cloud Database:** Dữ liệu hoàn toàn được cô lập và lưu trữ trực tuyến an toàn thông qua kết nối JDBC tới nền tảng Railway.
+* **Trải nghiệm UI/UX tốt:** Cảnh báo popup rõ ràng (DialogHelper), cập nhật giao diện mượt mà không gây đơ ứng dụng nhờ phân tách luồng UI và luồng Network.
+
+---
+
+## 6. Tài liệu Báo cáo và Video Demo
+
+* 📄 **Báo cáo PDF:** [Bao_Cao_He_Thong_Dau_Gia.pdf](./Bao_Cao_He_Thong_Dau_Gia.pdf) *(Nhấn vào đây để xem chi tiết kiến trúc)*
+* 🎥 **Video Demo toàn bộ luồng hệ thống:** [Chèn link YouTube / Google Drive Demo vào đây]
