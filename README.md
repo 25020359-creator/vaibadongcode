@@ -48,18 +48,31 @@ Dự án áp dụng mô hình **MVC** cho giao diện và **DAO Pattern** cho CS
  ┃ ┗ 📂 enums     : Tập hằng số cấu hình hệ thống (Role, ItemStatus)
  ┃
  ┣ 📂 server (Backend - Xử lý nghiệp vụ & Database)
- ┃ ┣ 📂 main      : Điểm khởi chạy Server Socket (MainServer)
- ┃ ┣ 📂 dao       : Data Access Object tương tác trực tiếp với MySQL
- ┃ ┣ 📂 service   : Tầng nghiệp vụ cốt lõi, xử lý đồng bộ và kiểm tra logic
- ┃ ┣ 📂 network   : Quản lý luồng Client (ClientHandler) và SessionManager
- ┃ ┗ 📂 dp        : Áp dụng các Design Patterns (Factory Method...)
+ ┃ ┗ 📂 src/main/java/com.auction.server
+ ┃   ┣ 📂 dao       : Data Access Object tương tác trực tiếp với MySQL/MariaDB.
+ ┃   ┣ 📂 db        : Cấu hình và quản lý kết nối Cơ sở dữ liệu.
+ ┃   ┣ 📂 dp        : Chứa các Design Patterns (Mẫu thiết kế) áp dụng trong hệ thống.
+ ┃   ┣ 📂 exception : Định nghĩa các ngoại lệ (lỗi) tùy chỉnh phía Server.
+ ┃   ┣ 📂 handler   : Quản lý luồng xử lý độc lập cho từng Client kết nối (ClientHandler).
+ ┃   ┣ 📂 main      : Điểm khởi chạy Server Socket.
+ ┃   ┣ 📂 network   : Quản lý giao tiếp mạng, luồng Server và SessionManager.
+ ┃   ┣ 📂 routes    : Điều hướng và định tuyến các endpoint / yêu cầu xử lý.
+ ┃   ┣ 📂 service   : Tầng nghiệp vụ cốt lõi, xử lý đồng bộ và kiểm tra logic hệ thống.
+ ┃   ┗ 📂 util      : Các lớp tiện ích hỗ trợ (ví dụ: băm mật khẩu, format ngày tháng).
+    📂 src/main/resources
+      ┗ ⚙️ config.properties   : Tách biệt các thông số cấu hình (configuration) ra khỏi mã nguồn (source code)
  ┃
  ┗ 📂 client (Frontend - Giao diện JavaFX)
-   ┣ 📂 main       : Điểm nạp giao diện ứng dụng (MainApplication)
-   ┣ 📂 controller : Điều hướng màn hình, bắt sự kiện thao tác người dùng
-   ┣ 📂 service    : Quản lý Socket luồng nền, lắng nghe Response realtime
-   ┣ 📂 util       : Các tiện ích hỗ trợ UI (Session, DialogHelper)
-   ┗ 📂 resources  : Chứa cấu trúc thư mục view (.fxml), css và images
+   ┣ 📂 src/main/java/com.auction.client
+   ┃ ┣ 📂 controller: Điều khiển giao diện, bắt sự kiện thao tác của người dùng.
+   ┃ ┣ 📂 main      : Điểm nạp giao diện và khởi chạy ứng dụng JavaFX.
+   ┃ ┣ 📂 network   : Lớp xử lý kết nối mạng (Socket Client / HTTP) gửi nhận gói tin.
+   ┃ ┣ 📂 service   : Quản lý các tác vụ luồng nền, lắng nghe Response realtime.
+   ┃ ┗ 📂 util      : Tiện ích hỗ trợ giao diện (Load cấu hình, Session, Dialog cảnh báo).
+   ┃
+   ┗ 📂 src/main/resources
+     ┣ 📂 com.auction.client : Chứa các file tĩnh như giao diện (.fxml), thiết kế (.css) và hình ảnh.
+     ┗ ⚙️ config.properties   : Tệp cấu hình lưu tham số mạng (Host, Port, URL Server).
 ```
 
 ---
@@ -79,14 +92,14 @@ Chuyển hướng Terminal (hoặc mở Terminal mới tại thư mục gốc) v
 ```bash
 mvn exec:java -pl server
 ```
-*(Lưu ý: Bạn cần giữ nguyên cửa sổ này để Server liên tục hoạt động và điều phối các kết nối).*
+*(Lưu ý: Cần giữ nguyên cửa sổ này để Server liên tục hoạt động và điều phối các kết nối).*
 
 ### Bước 3: Khởi động Client (Có thể chạy nhiều cửa sổ)
 Mở một cửa sổ Terminal **hoàn toàn mới** và chạy lệnh:
 ```bash
 mvn javafx:run -pl client
 ```
-*(Mẹo: Bạn có thể mở nhiều tab Terminal và chạy lệnh này lặp đi lặp lại để tạo ra 2, 3, hay nhiều Client giả lập các người dùng khác nhau cùng tham gia vào một phòng đấu giá).*
+*(Mẹo: Có thể mở nhiều tab Terminal và chạy lệnh này lặp đi lặp lại để tạo ra 2, 3, hay nhiều Client giả lập các người dùng khác nhau cùng tham gia vào một phòng đấu giá).*
 
 ---
 
@@ -102,5 +115,5 @@ mvn javafx:run -pl client
 
 ## 6. Tài liệu Báo cáo và Video Demo
 
-* 📄 **Báo cáo PDF:** [Bao_Cao_He_Thong_Dau_Gia.pdf](./Bao_Cao_He_Thong_Dau_Gia.pdf) *(Nhấn vào đây để xem chi tiết kiến trúc)*
+* 📄 **Báo cáo PDF:** [Bao_Cao_He_Thong_Dau_Gia.pdf](https://github.com/nguyenvanal/auction-system/raw/main/Bao_Cao_He_Thong_Dau_Gia.pdf) *(Nhấn vào đây để xem chi tiết kiến trúc)*
 * 🎥 **Video Demo toàn bộ luồng hệ thống:** [Chèn link YouTube / Google Drive Demo vào đây]
